@@ -268,7 +268,7 @@
         .hero {
             margin-top: 165px;
             background: linear-gradient(135deg, rgba(15, 41, 66, 0.95) 0%, rgba(26, 63, 92, 0.92) 100%), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(212,165,116,0.05)" stroke-width="1"/></pattern></defs><rect fill="url(%23grid)" width="1200" height="600"/></svg>');
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80');
             background-size: cover;
             background-position: center;
             min-height: 550px;
@@ -338,13 +338,18 @@
         .search-bar input {
             width: 100%;
             padding: 18px 24px;
-            padding-left: 52px;
+            padding-left: 56px;
             border: 2px solid rgba(15, 41, 66, 0.1);
             border-radius: 12px;
             font-size: 15px;
             font-family: 'DM Sans', sans-serif;
             transition: all 0.3s ease;
             background: white;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
         }
 
         .search-bar input:focus {
@@ -356,11 +361,12 @@
         .search-bar::before {
             content: '🔍';
             position: absolute;
-            left: 20px;
+            left: 22px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 18px;
             opacity: 0.5;
+            z-index: 1;
         }
 
         .property-filters {
@@ -1101,6 +1107,241 @@
         }
 
         /* Responsive Design */
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 41, 66, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease-out;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-navy);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-gold);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .modal-image-section {
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 24px 0 0 24px;
+        }
+
+        .modal-image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-details-section {
+            padding: 50px;
+        }
+
+        .modal-details-section .property-type {
+            margin-bottom: 16px;
+        }
+
+        .modal-details-section h2 {
+            font-size: 32px;
+            color: var(--primary-navy);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .modal-location {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .modal-price {
+            background: linear-gradient(135deg, var(--cream) 0%, rgba(212, 165, 116, 0.1) 100%);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .price-label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            display: block;
+            font-size: 42px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .price-period {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .modal-features {
+            margin-bottom: 32px;
+        }
+
+        .modal-features h3,
+        .modal-description h3 {
+            font-size: 18px;
+            color: var(--primary-navy);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .modal-features ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .modal-features li {
+            color: var(--text-muted);
+            font-size: 14px;
+            padding: 8px 0;
+        }
+
+        .modal-description {
+            margin-bottom: 32px;
+        }
+
+        .modal-description p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 16px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(15, 41, 66, 0.1);
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-bronze));
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(212, 165, 116, 0.5);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            color: var(--primary-navy);
+            padding: 16px 32px;
+            border: 2px solid var(--primary-navy);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-navy);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
         @media (max-width: 1200px) {
             .main-header {
                 padding: 20px 30px;
@@ -1232,6 +1473,41 @@
                 width: 40px;
                 height: 40px;
             }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-image-section {
+                border-radius: 24px 24px 0 0;
+                min-height: 300px;
+            }
+
+            .modal-details-section {
+                padding: 30px 24px;
+            }
+
+            .modal-details-section h2 {
+                font-size: 24px;
+            }
+
+            .price-amount {
+                font-size: 36px;
+            }
+
+            .modal-features ul {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .modal-close {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
         }
 
         /* Smooth Scroll */
@@ -1259,6 +1535,204 @@
     </style>
 </head>
 <body>
+    <script>
+        // Dummy data for properties
+        const dummyProperties = {
+            all: [
+                { id: 1, type: 'Apartment', name: '131 Raymond Street', city: 'Guelph, ON', price: 1845, bedrooms: 2, image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+                { id: 2, type: 'Apartment', name: '456 Wellington Road', city: 'Cambridge, ON', price: 1650, bedrooms: 1, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800' },
+                { id: 3, type: 'Apartment', name: '789 King Street', city: 'Kitchener, ON', price: 1950, bedrooms: 3, image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800' },
+                { id: 4, type: 'Apartment', name: '234 Main Street', city: 'Waterloo, ON', price: 1750, bedrooms: 2, image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800' },
+            ],
+            apartments: [
+                { id: 1, type: 'Apartment', name: '131 Raymond Street', city: 'Guelph, ON', price: 1845, bedrooms: 2, image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+                { id: 2, type: 'Apartment', name: '456 Wellington Road', city: 'Cambridge, ON', price: 1650, bedrooms: 1, image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800' },
+                { id: 5, type: 'Apartment', name: '890 Victoria Street', city: 'Hamilton, ON', price: 1550, bedrooms: 1, image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800' },
+            ],
+            luxury: [
+                { id: 6, type: 'Luxury Condo', name: 'Skyline Tower', city: 'Toronto, ON', price: 3500, bedrooms: 2, image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+                { id: 7, type: 'Luxury Condo', name: 'Harbour View', city: 'Burlington, ON', price: 4200, bedrooms: 3, image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800' },
+            ],
+            executive: [
+                { id: 8, type: 'Executive Suite', name: 'Executive Plaza', city: 'Mississauga, ON', price: 2800, bedrooms: 2, image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
+                { id: 9, type: 'Executive Suite', name: 'Business District Suite', city: 'Oakville, ON', price: 3100, bedrooms: 2, image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800' },
+            ]
+        };
+
+        let currentProperties = [...dummyProperties.all];
+        let currentIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFilterButtons();
+            setupCarouselNavigation();
+            setupPropertyCardClick();
+            displayProperty(currentIndex);
+        });
+
+        // Filter buttons functionality
+        function setupFilterButtons() {
+            const buttons = document.querySelectorAll('.filter-buttons button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterType = this.textContent.toLowerCase().trim();
+                    if (filterType === 'all') {
+                        currentProperties = [...dummyProperties.all];
+                    } else if (filterType === 'apartments') {
+                        currentProperties = [...dummyProperties.apartments];
+                    } else if (filterType === 'luxury condos') {
+                        currentProperties = [...dummyProperties.luxury];
+                    } else if (filterType === 'executive suites') {
+                        currentProperties = [...dummyProperties.executive];
+                    }
+                    
+                    currentIndex = 0;
+                    displayProperty(currentIndex);
+                    updateCarouselCounter();
+                });
+            });
+        }
+
+        // Carousel navigation
+        function setupCarouselNavigation() {
+            const prevBtn = document.querySelector('.carousel-nav button:first-child');
+            const nextBtn = document.querySelector('.carousel-nav button:last-child');
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + currentProperties.length) % currentProperties.length;
+                displayProperty(currentIndex);
+                updateCarouselCounter();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % currentProperties.length;
+                displayProperty(currentIndex);
+                updateCarouselCounter();
+            });
+        }
+
+        // Display property
+        function displayProperty(index) {
+            const property = currentProperties[index];
+            const card = document.querySelector('.property-card');
+            
+            card.innerHTML = `
+                <div class="property-image" style="background-image: url('${property.image}'); background-size: cover; background-position: center;"></div>
+                <div class="property-details">
+                    <div class="property-type">${property.type}</div>
+                    <h3>${property.name} - ${property.city}</h3>
+                    <div class="property-price">
+                        Available Suites starting at 
+                        <span class="amount">$${property.price.toLocaleString()}</span> 
+                        Per Month
+                    </div>
+                    <div style="color: var(--text-muted); margin-bottom: 20px;">
+                        <strong>${property.bedrooms}</strong> Bedroom${property.bedrooms > 1 ? 's' : ''} Available
+                    </div>
+                    <a href="#" class="view-property-btn" onclick="openPropertyModal(${property.id}); return false;">VIEW PROPERTY</a>
+                </div>
+            `;
+        }
+
+        // Update carousel counter
+        function updateCarouselCounter() {
+            const counter = document.querySelector('.carousel-nav span');
+            counter.textContent = `${currentIndex + 1}/${currentProperties.length}`;
+        }
+
+        // Property card click
+        function setupPropertyCardClick() {
+            // Will be set up after property is displayed
+        }
+
+        // Open property modal
+        function openPropertyModal(propertyId) {
+            const allProperties = [...dummyProperties.all, ...dummyProperties.luxury, ...dummyProperties.executive];
+            const property = allProperties.find(p => p.id === propertyId);
+            
+            if (!property) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                    <div class="modal-grid">
+                        <div class="modal-image-section">
+                            <img src="${property.image}" alt="${property.name}">
+                        </div>
+                        <div class="modal-details-section">
+                            <div class="property-type">${property.type}</div>
+                            <h2>${property.name}</h2>
+                            <p class="modal-location">📍 ${property.city}</p>
+                            
+                            <div class="modal-price">
+                                <span class="price-label">Starting at</span>
+                                <span class="price-amount">$${property.price.toLocaleString()}</span>
+                                <span class="price-period">/ month</span>
+                            </div>
+
+                            <div class="modal-features">
+                                <h3>Property Features</h3>
+                                <ul>
+                                    <li>🛏️ ${property.bedrooms} Bedroom${property.bedrooms > 1 ? 's' : ''}</li>
+                                    <li>🚿 ${property.bedrooms} Bathroom${property.bedrooms > 1 ? 's' : ''}</li>
+                                    <li>🅿️ Parking Available</li>
+                                    <li>🌡️ Heat Included</li>
+                                    <li>💧 Water Included</li>
+                                    <li>🧺 Laundry on Site</li>
+                                    <li>🏢 24/7 Security</li>
+                                    <li>🏋️ Fitness Center</li>
+                                </ul>
+                            </div>
+
+                            <div class="modal-description">
+                                <h3>Description</h3>
+                                <p>Experience comfortable living in this well-maintained ${property.type.toLowerCase()}. Located in the heart of ${property.city}, this property offers easy access to shopping, dining, and public transportation.</p>
+                                <p>Our professional management team ensures a pleasant living experience with prompt maintenance service and 24/7 emergency support.</p>
+                            </div>
+
+                            <div class="modal-actions">
+                                <button class="btn-primary" onclick="alert('Booking request submitted!')">Schedule Viewing</button>
+                                <button class="btn-secondary" onclick="alert('Application downloaded!')">Download Application</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-bar input');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        const searchTerm = this.value.toLowerCase();
+                        if (searchTerm) {
+                            alert(`Searching for: ${searchTerm}`);
+                            // In a real app, this would filter properties
+                        }
+                    }
+                });
+            }
+        });
+    </script>
     <!-- Header -->
     <header>
         <div class="top-nav">
@@ -1350,15 +1824,7 @@
                 </div>
             </div>
             <div class="property-card">
-                <div class="property-image"></div>
-                <div class="property-details">
-                    <div class="property-type">APARTMENT</div>
-                    <h3>131 Raymond Street - Guelph, ON</h3>
-                    <div class="property-price">
-                        Available Suites starting at <span class="amount">$1,845</span> Per Month
-                    </div>
-                    <a href="#" class="view-property-btn">VIEW PROPERTY</a>
-                </div>
+                <!-- Property will be loaded dynamically -->
             </div>
         </div>
     </section>
@@ -1375,7 +1841,7 @@
                         DON & SHIRLEY - ABERDEEN PLACE - PARKING SPACE & HEAT INCLUDED
                     </div>
                 </div>
-                <div class="testimonial-video"></div>
+                <div class="testimonial-video" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'); background-size: cover; background-position: center;"></div>
             </div>
         </div>
     </section>
@@ -1391,7 +1857,7 @@
                     <a href="#">More about us</a>
                 </div>
                 <div class="mission-image">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23d4b896'/%3E%3C/svg%3E" alt="Building">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Building">
                 </div>
             </div>
         </div>
